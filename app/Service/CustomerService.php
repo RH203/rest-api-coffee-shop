@@ -66,7 +66,7 @@ class CustomerService
             'no_phone' => $noPhone,
             'gender' => $gender,
             'birth_date' => $birthDate,
-        ], fn($v) => !is_null($v));
+        ], fn ($v) => ! is_null($v));
 
         return $this->customerRepository->updateCustomer($customer, $data);
     }

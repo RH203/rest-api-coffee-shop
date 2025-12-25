@@ -20,11 +20,11 @@ class AuthService
 
     public function login($request)
     {
-        $user = !empty($request['email']) ?
+        $user = ! empty($request['email']) ?
             $this->userRepository->findUserByEmail($request['email']) :
             $this->userRepository->findUserByName($request['name']);
 
-        if (empty($user) || !Hash::check($request['password'], $user->password)) {
+        if (empty($user) || ! Hash::check($request['password'], $user->password)) {
             throw new LoginException('Email atau password salah!');
         }
 
@@ -39,7 +39,7 @@ class AuthService
             throw new RegisterException('Error ketika membuat user baru!');
         }
 
-        if (!empty($request['role']) && $request['role'] == RoleEnum::ADMIN->value && Auth::user()->hasRole(RoleEnum::ADMIN->value)) {
+        if (! empty($request['role']) && $request['role'] == RoleEnum::ADMIN->value && Auth::user()->hasRole(RoleEnum::ADMIN->value)) {
             $newUser->assignRole(RoleEnum::ADMIN->value);
         }
 
