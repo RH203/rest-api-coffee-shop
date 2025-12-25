@@ -68,8 +68,6 @@ class CustomerService
             'birth_date' => $birthDate,
         ], fn($v) => !is_null($v));
 
-        $updateCustomer = $this->customerRepository->updateCustomer($customer, $data);
-
-        return $updateCustomer;
+        return $this->customerRepository->updateCustomer($customer, $data);
     }
 }

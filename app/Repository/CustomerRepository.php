@@ -44,7 +44,8 @@ class CustomerRepository
         DB::transaction(function () use ($customer, $data) {
             $customer->update($data);
 
-            return $customer->update();
+            return $customer->fresh();
         });
+        return null;
     }
 }
