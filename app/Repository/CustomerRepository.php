@@ -3,17 +3,18 @@
 namespace App\Repository;
 
 use App\Models\Customers;
+use Illuminate\Support\Facades\DB;
 
 class CustomerRepository
 {
     public function getCustomer($name, $email, $noPhone, $perPage = 10)
     {
         return Customers::when($name, function ($query) use ($name) {
-            return $query->where('name', 'like', '%'.$name.'%');
+            return $query->where('name', 'like', '%' . $name . '%');
         })->when($email, function ($query) use ($email) {
-            return $query->where('email', 'like', '%'.$email.'%');
+            return $query->where('email', 'like', '%' . $email . '%');
         })->when($noPhone, function ($query) use ($noPhone) {
-            return $query->where('noPhone', 'like', '%'.$noPhone.'%');
+            return $query->where('noPhone', 'like', '%' . $noPhone . '%');
         })->paginate($perPage);
     }
 
@@ -40,8 +41,10 @@ class CustomerRepository
 
     public function updateCustomer(Customers $customer, $data)
     {
-        $customer->update($data);
+        DB::transaction(function () use ($customer, $data) {
+            $customer->update($data);
 
-        return $customer->update();
+            return $customer->update();
+        });
     }
 }
