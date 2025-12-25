@@ -31,7 +31,7 @@ class CustomerController extends Controller
         } catch (CustomerException $e) {
             return $this->errorResponse($e->getMessage());
         } catch (\Throwable $e) {
-            Log::error('Gagal mendapatkan data customers.' . $e->getMessage());
+            Log::error('Gagal mendapatkan data customers.'.$e->getMessage());
 
             return $this->errorResponse('Oops! Something went wrong.');
         }
@@ -46,7 +46,7 @@ class CustomerController extends Controller
         } catch (CustomerException $e) {
             return $this->errorResponse($e->getMessage());
         } catch (\Throwable $e) {
-            Log::error('Error ketika membuat member baru: ' . $e->getMessage());
+            Log::error('Error ketika membuat member baru: '.$e->getMessage());
 
             return $this->errorResponse('Oops something wrong.');
         }
@@ -65,7 +65,7 @@ class CustomerController extends Controller
         } catch (CustomerException $e) {
             return $this->errorResponse($e->getMessage());
         } catch (\Throwable $e) {
-            Log::error('Error ketika membuat menghapus member: ' . $e->getMessage());
+            Log::error('Error ketika membuat menghapus member: '.$e->getMessage());
 
             return $this->errorResponse('Oops something wrong.');
         }
@@ -87,7 +87,8 @@ class CustomerController extends Controller
         } catch (CustomerException $e) {
             return $this->errorResponse($e->getMessage());
         } catch (\Throwable $e) {
-            Log::error('Error ketika membuat mengubah member: ' . $e->getMessage());
+            Log::error('Error ketika membuat mengubah member: '.$e->getMessage());
+
             return $this->errorResponse('Oops something wrong.');
         }
     }

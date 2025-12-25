@@ -8,21 +8,13 @@ class CustomerRepository
 {
     public function getCustomer($name, $email, $noPhone, $perPage = 10)
     {
-        $query = Customers::query();
-
-        if ($name) {
-            $query->where('name', 'like', "%$name%");
-        }
-
-        if ($email) {
-            $query->where('email', 'like', "%$email%");
-        }
-
-        if ($noPhone) {
-            $query->where('noPhone', 'like', "%$noPhone%");
-        }
-
-        return $query->paginate($perPage);
+        return Customers::when($name, function ($query) use ($name) {
+            return $query->where('name', 'like', '%'.$name.'%');
+        })->when($email, function ($query) use ($email) {
+            return $query->where('email', 'like', '%'.$email.'%');
+        })->when($noPhone, function ($query) use ($noPhone) {
+            return $query->where('noPhone', 'like', '%'.$noPhone.'%');
+        })->paginate($perPage);
     }
 
     public function createNewUCustomer($name, $email, $noPhone, $gender, $birthDate)
