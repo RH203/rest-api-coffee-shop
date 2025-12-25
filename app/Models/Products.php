@@ -14,7 +14,7 @@ class Products extends Model
     /** @use HasFactory<\Database\Factories\ProductsFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['category_id', 'name', 'description', 'image', 'price', 'stock', 'is_unlimited'];
+    protected $fillable = ['category_id', 'name', 'description', 'image', 'price', 'stock', 'is_unlimited', 'status_products'];
 
     public function category(): BelongsTo
     {

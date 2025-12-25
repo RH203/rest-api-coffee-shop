@@ -24,7 +24,7 @@ class AuthService
             $this->userRepository->findUserByEmail($request['email']) :
             $this->userRepository->findUserByName($request['name']);
 
-        if (! $user || ! Hash::check($request['password'], $user->password)) {
+        if (empty($user) || ! Hash::check($request['password'], $user->password)) {
             throw new LoginException('Email atau password salah!');
         }
 
@@ -35,7 +35,7 @@ class AuthService
     {
         $newUser = $this->userRepository->createNewUser($request['name'], $request['email'], Hash::make($request['password']));
 
-        if (! $newUser) {
+        if (empty($newUser)) {
             throw new RegisterException('Error ketika membuat user baru!');
         }
 

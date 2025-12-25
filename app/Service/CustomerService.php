@@ -19,7 +19,7 @@ class CustomerService
     {
         $customers = $this->customerRepository->getCustomer($name, $email, $noPhone);
 
-        if (! $customers) {
+        if (empty($customers)) {
             throw new CustomerException('Gagal mendapatkan data customers.');
         }
 
@@ -30,7 +30,7 @@ class CustomerService
     {
         $newCustomer = $this->customerRepository->createNewUCustomer($request['name'], $request['email'], $request['no_phone'], $request['gender'], $request['birth_date']);
 
-        if (! $newCustomer) {
+        if (empty($newCustomer)) {
             throw new CustomerException('Gagal membuat member baru!.');
         }
 
@@ -43,7 +43,7 @@ class CustomerService
     {
         $customer = $this->customerRepository->findCustomerById($customerId);
 
-        if (! $customer) {
+        if (empty($customer)) {
             throw new CustomerException('Customer tidak ditemukan!.');
         }
 
@@ -56,7 +56,7 @@ class CustomerService
     {
         $customer = $this->customerRepository->findCustomerById($customerId);
 
-        if (! $customer) {
+        if (empty($customer)) {
             throw new CustomerException('Customer tidak ditemukan!.');
         }
 
@@ -68,8 +68,6 @@ class CustomerService
             'birth_date' => $birthDate,
         ], fn ($v) => ! is_null($v));
 
-        $updateCustomer = $this->customerRepository->updateCustomer($customer, $data);
-
-        return $updateCustomer;
+        return $this->customerRepository->updateCustomer($customer, $data);
     }
 }
