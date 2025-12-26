@@ -30,7 +30,7 @@ class ProductService
         return $products;
     }
 
-    public function createProduct($categoryId, $name, $description, $image, $price, $statusProduct, $stock, $isUnlimited)
+    public function createProduct($categoryId, $name, $description, $image, $price, $statusProduct, $stock, $isUnlimited, $variants)
     {
         $category = $this->categoryRepository->findCategoryById($categoryId);
 
@@ -46,6 +46,16 @@ class ProductService
         if (empty($newProduct)) {
             throw new ProductException('Gagal menyimpan data.');
         }
+
+        $productVariants = [];
+
+        foreach ($variants as $variant) {
+            $productVariants[$variant['variant_id']] = [
+                'addon_price' => $variant['addon_price']
+            ];
+        }
+
+        $this->productRepository->syncVariantProduct($newProduct, $productVariants);
 
         return $newProduct;
     }

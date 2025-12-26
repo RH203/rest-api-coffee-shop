@@ -49,7 +49,8 @@ class ProductController extends Controller
                 $request['price'],
                 $request['status_product'],
                 $request['stock'],
-                $request['is_unlimited']
+                $request['is_unlimited'],
+                $request['variants']
             );
 
             return $this->successResponse($request);

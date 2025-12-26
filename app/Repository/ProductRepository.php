@@ -55,4 +55,9 @@ class ProductRepository
     {
         return $product->delete();
     }
+
+    public function syncVariantProduct(Products $product, $variant)
+    {
+        return $product->varianProducts()->sync($variant);
+    }
 }

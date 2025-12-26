@@ -30,6 +30,29 @@ class CreateProductRequest extends FormRequest
             "status_product" => "required|integer|between:0,1",
             "stock" => "nullable|integer",
             "is_unlimited" => "nullable|integer|between:0,1",
+            "variants" => "required|array|min:1",
+            "variants.*.variant_id" => "required|integer|exists:variants,id",
+            "variants.*.add_on_price" => "required|numeric",
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            if (! $this->has('variants')) {
+                return;
+            }
+
+            $variantIds = collect($this->input('variants'))
+                ->pluck('variant_id');
+
+            if ($variantIds->duplicates()->isNotEmpty()) {
+                $validator->errors()->add(
+                    'variants',
+                    'Variant tidak boleh duplikat.'
+                );
+            }
+        });
     }
 }
